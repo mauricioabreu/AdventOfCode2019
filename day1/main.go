@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
-	"math"
 	"strconv"
 	"strings"
 )
@@ -15,17 +14,28 @@ func main() {
 	}
 
 	masses := strings.Split(string(fileContent), ("\n"))
-	sum := 0
+	requiredFuel := 0
+	requiredFuelWithFueld := 0
 	for _, mass := range masses {
 		i, err := strconv.Atoi(mass)
 		if err != nil {
 			continue
 		}
-		sum = sum + getFuel(i)
+		requiredFuel = requiredFuel + getFuel(i)
+		requiredFuelWithFueld += getFuelWithFuel(i)
 	}
-	fmt.Printf("Sum required to load all modules: %d\n", sum)
+	fmt.Printf("Fuel required to load all modules: %d\n", requiredFuel)
+	fmt.Printf("Fuel required to load all modules and all the fuel: %d\n", requiredFuelWithFueld)
 }
 
 func getFuel(mass int) int {
-	return int(math.Floor((float64(mass) / 3) - 2))
+	return mass/3 - 2
+}
+
+func getFuelWithFuel(mass int) int {
+	requiredFuel := getFuel(mass)
+	for fuel := getFuel(requiredFuel); fuel > 0; fuel = getFuel(fuel) {
+		requiredFuel += fuel
+	}
+	return requiredFuel
 }
