@@ -13,11 +13,11 @@ func TestIsDecreasing(t *testing.T) {
 }
 
 func TestHasDouble(t *testing.T) {
-	if hasDouble("122345") != true {
+	if withAtLeastOneDouble(getDoubledDigits("1222345")) != true {
 		t.Errorf("Number has double, pair of 22")
 	}
 
-	if hasDouble("123789") == true {
+	if withAtLeastOneDouble(getDoubledDigits("123789")) == true {
 		t.Errorf("Number does not have double")
 	}
 }
