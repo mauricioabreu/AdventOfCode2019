@@ -45,8 +45,10 @@ func isDecreasing(password string) bool {
 }
 
 func hasDouble(password string) bool {
-	for l := 1; l < len(password); l++ {
-		if password[l] == password[l-1] {
+	doubled := make(map[rune]int, 6)
+	for _, l := range password {
+		doubled[l]++
+		if doubled[l] > 1 {
 			return true
 		}
 	}
